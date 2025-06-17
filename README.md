@@ -106,7 +106,7 @@ If not installed, run directly via:
 
 ## ✅ Requirements
 
-- Bash 5.1+
+- Bash 3.2+
 - UTF-8 capable terminal (GNOME Terminal, iTerm2, Alacritty, etc.)
 - Works on **Linux**, **macOS**, and **WSL**
 - No external dependencies
