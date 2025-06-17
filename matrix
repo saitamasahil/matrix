@@ -1,52 +1,102 @@
 #!/usr/bin/env bash
-
-set -eu
+set -euo pipefail
 
 init_term() {
-    printf '\e[?1049h\e[2J\e[?25l'
-
-    # Bash < 4 lacks dynamic $LINES/$COLUMNS updates, so we fallback to `stty`
-    (( BASH_VERSINFO[0] < 4 ))&& read -r LINES COLUMNS < <(stty size)&& return
-    # Bash 4+ supports dynamic sizing via `shopt -s checkwinsize`,
-    # but it forces a size check after every command — inefficient for tight loops.
-    # Instead, we directly query the terminal size from the bottom-right:
-    IFS='[;' read -p $'\e[999;999H\e[6n' -rd R -s _ LINES COLUMNS
+    printf '\e[?1049h\e[2J\e[?25l' # Alt screen, clear, hide cursor
+    stty -echo
+    read -r LINES COLUMNS < <(stty size)
 }
 
-deinit_term(){ printf '\e[?1049l\e[?25h'; stty echo; }
+deinit_term() {
+    pkill -P $$ &>/dev/null || true # Kill children
+    printf '\e[?1049l'              # Exit alt screen
+    printf '\e[H\e[2J\e[3J\e[?25h'  # Move cursor top, clear screen+scrollback, show cursor
+    stty echo
+    exit 0
+}
+trap deinit_term EXIT INT
 
-print_to() { printf '\e[%d;%dH\e[%d;38;2;%sm%s\e[m' "$2" "$3" "${5:-2}" "$4" "$1"; }
+SYMBOLS='アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=<>?/|[]{}◆◇■□▲△▼▽※¤●○◎☆★♠♣♥♦♪♫∆∇∞§'
 
-rain() {
-    ((dropStart=RANDOM%LINES/9))
-    ((dropCol=RANDOM%COLUMNS+1))
-    ((dropLen=RANDOM%(LINES/2)+2))
-    ((dropSpeed=RANDOM%9+1))
-    ((dropColDim=RANDOM%4))
-    color=${colors[RANDOM%${#colors[@]}]}
+COLOR_MODE="random"
+if [[ $# -gt 0 ]]; then
+    case "$1" in
+    --green) COLOR_MODE="0 255 0" ;;
+    --orange) COLOR_MODE="255 165 0" ;;
+    --blue) COLOR_MODE="0 120 255" ;;
+    --red) COLOR_MODE="255 0 0" ;;
+    --cyan) COLOR_MODE="0 255 255" ;;
+    --purple) COLOR_MODE="180 0 255" ;;
+    --sky) COLOR_MODE="135 206 235" ;;
+    --amber) COLOR_MODE="255 191 0" ;;
+    --rgb) COLOR_MODE="rgb-only" ;;
+    *)
+        echo "Unknown option: $1"
+        exit 1
+        ;;
+    esac
+fi
 
-    for ((i=dropStart; i <= LINES+dropLen; i++)); do
-        symbol=${1:RANDOM%${#1}:1}
-        (( dropColDim ))|| print_to "$symbol" $i $dropCol "$color" 1
-        (( i > dropStart ))&& print_to "$symbol" $((i-1)) $dropCol "$color"
-        (( i > dropLen ))&& printf '\e[%d;%dH\e[m ' $((i-dropLen)) $dropCol
+draw_char_rgb() {
+    local row=$1 col=$2 char=$3 r=$4 g=$5 b=$6
+    ((row >= 1 && row <= LINES)) && printf '\e[%d;%dH\e[38;2;%d;%d;%dm%s\e[0m' "$row" "$col" "$r" "$g" "$b" "$char"
+}
 
-        sleep 0.$dropSpeed
+random_drop() {
+    local col=$((RANDOM % COLUMNS + 1))
+    local len=$((RANDOM % (LINES / 2) + 4))
+    local speed=$((RANDOM % 10 + 1))
+
+    local r g b
+    if [[ "$COLOR_MODE" == "random" ]]; then
+        r=$((RANDOM % 256))
+        g=$((RANDOM % 256))
+        b=$((RANDOM % 256))
+    elif [[ "$COLOR_MODE" == "rgb-only" ]]; then
+        case $((RANDOM % 3)) in
+        0)
+            r=255
+            g=0
+            b=0
+            ;; # Red
+        1)
+            r=0
+            g=255
+            b=0
+            ;; # Green
+        2)
+            r=0
+            g=0
+            b=255
+            ;; # Blue
+        esac
+    else
+        read -r r g b <<<"$COLOR_MODE"
+    fi
+
+    for ((i = 1; i <= LINES + len; i++)); do
+        local char="${SYMBOLS:RANDOM%${#SYMBOLS}:1}"
+        draw_char_rgb "$i" "$col" "$char" "$r" "$g" "$b"
+
+        for offset in {1..6}; do
+            local fade_r=$((r / (offset + 1)))
+            local fade_g=$((g / (offset + 1)))
+            local fade_b=$((b / (offset + 1)))
+            local trail_row=$((i - offset))
+            ((trail_row > 0)) && draw_char_rgb "$trail_row" "$col" "${SYMBOLS:RANDOM%${#SYMBOLS}:1}" "$fade_r" "$fade_g" "$fade_b"
+        done
+
+        ((i > len)) && ((i - len <= LINES)) && printf '\e[%d;%dH ' "$((i - len))" "$col"
+        sleep "0.0$speed"
     done
 }
 
-trap init_term WINCH
-trap 'kill 0; exit' INT
-trap deinit_term EXIT
+main() {
+    init_term
+    while true; do
+        (($(jobs -r | wc -l) < COLUMNS / 3)) && random_drop &
+        sleep 0.04
+    done
+}
 
-export LC_ALL=C
-
-# Using non-ASCII characters (like katakana, emojis, or custom symbols) requires 
-# everyone running the script to have a compatible font installed. To keep things 
-# portable and simple, this script uses a set of ASCII characters (defined below) 
-# so it doesn't require any special font installation on the user's system.
-symbols='0123456789!@#$%^&*()-_=+[]{}|;:,.<>?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-colors=('102;255;102' '255;176;0' '169;169;169')
-
-init_term; stty -echo
-for((;;)) { rain "$symbols" & sleep 0.1; }
+main
