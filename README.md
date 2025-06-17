@@ -23,7 +23,7 @@ Just run and vibe. No dependencies. No nonsense.
 Run directly in your terminal with no install:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix)
+bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix2/main/matrix)
 ```
 
 > Note: The default theme uses random colors.
@@ -31,7 +31,7 @@ bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix
 Use any color theme by passing a flag:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix) --red
+bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix2/main/matrix) --red
 ```
 
 Available predefined themes:
@@ -55,7 +55,7 @@ Available predefined themes:
 Clone the repo:
 
 ```bash
-git clone https://github.com/saitamasahil/matrix
+git clone https://github.com/saitamasahil/matrix2
 cd matrix
 ```
 
