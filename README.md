@@ -111,6 +111,8 @@ This runs the green theme with low power usage (slower drops, less CPU load).
 
 - Bash 3.2+
 - UTF-8 capable terminal (GNOME Terminal, iTerm2, Alacritty, etc.)
+- Truecolor (24-bit) terminal support (most modern terminals support this)
+- Terminal must support ANSI escape sequences
 - Works on **Linux**, **macOS**, and **WSL**
 - No external dependencies
 
