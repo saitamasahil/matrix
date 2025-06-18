@@ -38,6 +38,8 @@ bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix2/main/matri
 
 > Check more flags below in the [🎨 Available Themes](#-available-themes) section.
 
+**Pro Tip:** For the best visual experience, use a terminal with a black or dark background to enhance the matrix rain effect.
+
 ---
 
 ## 📦 Download & Install
