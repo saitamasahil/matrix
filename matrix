@@ -16,7 +16,7 @@ deinit_term() {
 }
 trap deinit_term EXIT INT
 
-SYMBOLS='アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=<>?/|[]{}■□▲△▼▽※¤☆♪♫∆∇∞§'
+SYMBOLS='ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=<>?/|[]{}■□▲△▼▽※¤☆♪♫∆∇∞§'
 
 COLOR_MODE="random"
 if [[ $# -gt 0 ]]; then
