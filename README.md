@@ -78,18 +78,26 @@ If not installed, run directly via:
 
 ## 🎨 Available Themes
 
-| Flag        | Description           |
-| ----------- | --------------------- |
-| `--green`   | Classic Matrix green  |
-| `--orange`  | Orange rain           |
-| `--blue`    | Blue rain             |
-| `--red`     | Red rain              |
-| `--cyan`    | Cyan rain             |
-| `--purple`  | Purple rain           |
-| `--sky`     | Sky blue rain         |
-| `--amber`   | Amber/orange-yellow   |
-| `--rgb`     | Red, green, blue rain |
-| _(default)_ | random colors         |
+| Flag         | Description           |
+| ------------ | --------------------- |
+| `--green`    | Classic Matrix green  |
+| `--orange`   | Orange rain           |
+| `--blue`     | Blue rain             |
+| `--red`      | Red rain              |
+| `--cyan`     | Cyan rain             |
+| `--purple`   | Purple rain           |
+| `--sky`      | Sky blue rain         |
+| `--amber`    | Amber/orange-yellow   |
+| `--pink`     | Bright pink rain      |
+| `--sakura`   | Sakura soft pink rain |
+| `--ice`      | Icy blue rain         |
+| `--mint`     | Fresh mint rain       |
+| `--peach`    | Peach tone rain       |
+| `--lavender` | Light lavender rain   |
+| `--gold`     | Golden yellow rain    |
+| `--silver`   | Silver rain           |
+| `--rgb`      | Red, green, blue rain |
+| _(default)_  | Random color mode     |
 
 > Run `matrix` with no flag for a random-colored experience
 

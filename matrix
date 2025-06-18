@@ -25,13 +25,21 @@ SLEEP_TIME=0.04
 if [[ $# -gt 0 ]]; then
     case "$1" in
     --green) COLOR_MODE="0 255 0" ;;
-    --orange) COLOR_MODE="255 165 0" ;;
+    --orange) COLOR_MODE="255 179 71" ;;
     --blue) COLOR_MODE="0 120 255" ;;
     --red) COLOR_MODE="255 0 0" ;;
     --cyan) COLOR_MODE="0 255 255" ;;
     --purple) COLOR_MODE="180 0 255" ;;
     --sky) COLOR_MODE="135 206 235" ;;
     --amber) COLOR_MODE="255 191 0" ;;
+    --pink) COLOR_MODE="255 105 180" ;;
+    --sakura) COLOR_MODE="255 182 193" ;;
+    --ice) COLOR_MODE="173 216 230" ;;
+    --mint) COLOR_MODE="152 255 152" ;;
+    --peach) COLOR_MODE="255 203 164" ;;
+    --lavender) COLOR_MODE="200 150 230" ;;
+    --gold) COLOR_MODE="255 215 0" ;;
+    --silver) COLOR_MODE="220 220 220" ;;
     --rgb) COLOR_MODE="rgb-only" ;;
     --low-power) SLEEP_TIME=0.1 ;;
     *)
