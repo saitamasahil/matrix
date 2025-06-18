@@ -94,8 +94,8 @@ draw_char_rgb() {
 random_drop() {
     sleep 0.$((RANDOM % 3)) # Stagger start time
 
-    local col=$((RANDOM % (COLUMNS - 2) + 1)) # Avoid far-right edge
-    local len=$((RANDOM % (LINES / 2) + 4))
+    local col=$((RANDOM % COLUMNS + 1)) # Use full width
+    local len=$((RANDOM % (LINES / 3) + 8))
     local speed=$((RANDOM % 10 + 1))
 
     local r g b
