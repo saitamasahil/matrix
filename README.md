@@ -26,7 +26,7 @@ Run directly in your terminal with no install:
 bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix2/main/matrix)
 ```
 
-> Note: The default theme uses random colors.
+> This is the default theme & it uses random colors.
 
 Use any color theme by passing a flag:
 
@@ -34,19 +34,9 @@ Use any color theme by passing a flag:
 bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix2/main/matrix) --red
 ```
 
-Available predefined themes:
+> This command runs the digital rain in the red color theme.
 
-| Flag       | Description           |
-| ---------- | --------------------- |
-| `--green`  | Classic Matrix green  |
-| `--orange` | Orange rain           |
-| `--blue`   | Blue rain             |
-| `--red`    | Red rain              |
-| `--cyan`   | Cyan rain             |
-| `--purple` | Purple rain           |
-| `--sky`    | Sky blue rain         |
-| `--amber`  | Amber/orange-yellow   |
-| `--rgb`    | Red, green, blue rain |
+> Check more flags below in the [🎨 Available Themes](#-available-themes) section.
 
 ---
 
@@ -72,9 +62,10 @@ sudo cp matrix /usr/local/bin
 You can now run the digital rain like so:
 
 ```bash
-matrix             # Default: rainbow color mode
+matrix             # Default: random color mode
 matrix --green     # Classic green rain
 matrix --red       # Red rain
+matrix --low-power # Low power mode (slower animation)
 ```
 
 If not installed, run directly via:
@@ -100,9 +91,21 @@ If not installed, run directly via:
 | `--rgb`     | Red, green, blue rain |
 | _(default)_ | random colors         |
 
-> Run `matrix` with no flag for a rainbow-colored experience 🌈
+> Run `matrix` with no flag for a random-colored experience
 
 ---
+
+## ⚙️ Optional mode
+
+| `--low-power` | Enables low FPS, uses less CPU |
+
+Example:
+
+```bash
+matrix --green --low-power
+```
+
+This runs the green theme with low power usage (slower drops, less CPU load).
 
 ## ✅ Requirements
 
@@ -128,5 +131,3 @@ sudo rm /usr/local/bin/matrix
 Originally inspired by the [matrix project by wick3dr0se](https://github.com/wick3dr0se/matrix) and, of course, the legendary visuals from _The Matrix_.
 
 > “I can only show you the door. You’re the one that has to walk through it.” — Morpheus
-
----

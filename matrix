@@ -2,15 +2,16 @@
 set -euo pipefail
 
 init_term() {
-    printf '\e[?1049h\e[2J\e[?25l' # Alt screen, clear, hide cursor
+    tput smcup # Enter alternate screen
+    tput civis # Hide cursor
     stty -echo
     read -r LINES COLUMNS < <(stty size)
 }
 
 deinit_term() {
     pkill -P $$ &>/dev/null || true # Kill children
-    printf '\e[?1049l'              # Exit alt screen
-    printf '\e[H\e[2J\e[3J\e[?25h'  # Move cursor top, clear screen+scrollback, show cursor
+    tput rmcup                      # Exit alternate screen
+    tput cnorm                      # Show cursor
     stty echo
     exit 0
 }
@@ -19,6 +20,8 @@ trap deinit_term EXIT INT
 SYMBOLS='ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=<>?/|[]{}■□▲△▼▽※¤☆♪♫∆∇∞§'
 
 COLOR_MODE="random"
+SLEEP_TIME=0.04
+
 if [[ $# -gt 0 ]]; then
     case "$1" in
     --green) COLOR_MODE="0 255 0" ;;
@@ -30,6 +33,7 @@ if [[ $# -gt 0 ]]; then
     --sky) COLOR_MODE="135 206 235" ;;
     --amber) COLOR_MODE="255 191 0" ;;
     --rgb) COLOR_MODE="rgb-only" ;;
+    --low-power) SLEEP_TIME=0.1 ;;
     *)
         echo "Unknown option: $1"
         exit 1
@@ -43,7 +47,9 @@ draw_char_rgb() {
 }
 
 random_drop() {
-    local col=$((RANDOM % COLUMNS + 1))
+    sleep 0.$((RANDOM % 3)) # Stagger start time
+
+    local col=$((RANDOM % (COLUMNS - 2) + 1)) # Avoid far-right edge
     local len=$((RANDOM % (LINES / 2) + 4))
     local speed=$((RANDOM % 10 + 1))
 
@@ -95,7 +101,7 @@ main() {
     init_term
     while true; do
         (($(jobs -r | wc -l) < COLUMNS / 3)) && random_drop &
-        sleep 0.04
+        sleep "$SLEEP_TIME"
     done
 }
 
