@@ -62,7 +62,7 @@ sudo cp matrix /usr/local/bin
 You can now run the digital rain like so:
 
 ```bash
-matrix             # Default: random color mode
+matrix             # Default: random color rain
 matrix --green     # Classic green rain
 matrix --red       # Red rain
 matrix --low-power # Low power mode (slower animation)
@@ -78,34 +78,37 @@ If not installed, run directly via:
 
 ## 🎨 Available Themes
 
-| Flag         | Description           |
-| ------------ | --------------------- |
-| `--green`    | Classic Matrix green  |
-| `--orange`   | Orange rain           |
-| `--blue`     | Blue rain             |
-| `--red`      | Red rain              |
-| `--cyan`     | Cyan rain             |
-| `--purple`   | Purple rain           |
-| `--sky`      | Sky blue rain         |
-| `--amber`    | Amber/orange-yellow   |
-| `--pink`     | Bright pink rain      |
-| `--sakura`   | Sakura soft pink rain |
-| `--ice`      | Icy blue rain         |
-| `--mint`     | Fresh mint rain       |
-| `--peach`    | Peach tone rain       |
-| `--lavender` | Light lavender rain   |
-| `--gold`     | Golden yellow rain    |
-| `--silver`   | Silver rain           |
-| `--rgb`      | Red, green, blue rain |
-| _(default)_  | Random color mode     |
+| Flag         | Description              |
+| ------------ | ------------------------ |
+| `--green`    | Classic Matrix green     |
+| `--orange`   | Orange rain              |
+| `--blue`     | Blue rain                |
+| `--red`      | Red rain                 |
+| `--cyan`     | Cyan rain                |
+| `--purple`   | Purple rain              |
+| `--sky`      | Sky blue rain            |
+| `--amber`    | Amber/orange-yellow rain |
+| `--pink`     | Pink rain                |
+| `--sakura`   | Cherry blossom pink rain |
+| `--ice`      | Icy light blue rain      |
+| `--mint`     | Fresh mint rain          |
+| `--peach`    | Peach rain               |
+| `--lavender` | Light lavender rain      |
+| `--gold`     | Golden yellow rain       |
+| `--silver`   | Silver rain              |
+| `--rgb`      | Red, green, blue rain    |
+| _(default)_  | Random color rain        |
 
 > Run `matrix` with no flag for a random-colored experience
 
 ---
 
-## ⚙️ Optional mode
+## ⚙️ Other flags
 
-| `--low-power` | Enables low FPS, uses less CPU |
+| Flag         | Description                     |
+| ------------ | ------------------------------- |
+| `--help`     | Show the help panel             |
+| `--low-power`| Enables low FPS, uses less CPU  |
 
 Example:
 

@@ -1,6 +1,40 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ "${1:-}" == "--help" ]]; then
+    clear
+    echo ""
+    echo "Matrix Rain CLI Options:"
+    echo "  matrix               → Random color rain"
+    echo "  matrix --green       → Classic Matrix green"
+    echo "  matrix --orange      → Orange rain"
+    echo "  matrix --blue        → Blue rain"
+    echo "  matrix --red         → Red rain"
+    echo "  matrix --cyan        → Cyan rain"
+    echo "  matrix --purple      → Purple rain"
+    echo "  matrix --sky         → Sky blue rain"
+    echo "  matrix --amber       → Amber/orange-yellow rain"
+    echo "  matrix --pink        → Pink rain"
+    echo "  matrix --sakura      → Cherry blossom pink rain"
+    echo "  matrix --ice         → Icy light blue rain"
+    echo "  matrix --mint        → Fresh mint rain"
+    echo "  matrix --peach       → Peach rain"
+    echo "  matrix --lavender    → Light lavender rain"
+    echo "  matrix --gold        → Golden yellow rain"
+    echo "  matrix --silver      → Silver rain"
+    echo "  matrix --rgb         → Red, green, blue rain"
+    echo "  matrix --low-power   → Enables low FPS, uses less CPU"
+    echo "  matrix --help        → Show this help panel"
+    echo ""
+    echo "💡 Example for low power mode: matrix --blue --low-power"
+    echo ""
+    echo "🚨 Press Ctrl+C anytime to exit the Matrix Rain."
+    echo ""
+    read -n 1 -s -r -p "Press any key to exit..."
+    clear
+    exit 0
+fi
+
 init_term() {
     tput smcup # Enter alternate screen
     tput civis # Hide cursor
@@ -23,30 +57,33 @@ COLOR_MODE="random"
 SLEEP_TIME=0.04
 
 if [[ $# -gt 0 ]]; then
-    case "$1" in
-    --green) COLOR_MODE="0 255 0" ;;
-    --orange) COLOR_MODE="255 179 71" ;;
-    --blue) COLOR_MODE="0 120 255" ;;
-    --red) COLOR_MODE="255 0 0" ;;
-    --cyan) COLOR_MODE="0 255 255" ;;
-    --purple) COLOR_MODE="180 0 255" ;;
-    --sky) COLOR_MODE="135 206 235" ;;
-    --amber) COLOR_MODE="255 191 0" ;;
-    --pink) COLOR_MODE="255 105 180" ;;
-    --sakura) COLOR_MODE="255 182 193" ;;
-    --ice) COLOR_MODE="173 216 230" ;;
-    --mint) COLOR_MODE="152 255 152" ;;
-    --peach) COLOR_MODE="255 203 164" ;;
-    --lavender) COLOR_MODE="200 150 230" ;;
-    --gold) COLOR_MODE="255 215 0" ;;
-    --silver) COLOR_MODE="220 220 220" ;;
-    --rgb) COLOR_MODE="rgb-only" ;;
-    --low-power) SLEEP_TIME=0.1 ;;
-    *)
-        echo "Unknown option: $1"
-        exit 1
-        ;;
-    esac
+    for arg in "$@"; do
+        case "$arg" in
+        --green) COLOR_MODE="0 255 0" ;;
+        --orange) COLOR_MODE="255 179 71" ;;
+        --blue) COLOR_MODE="0 120 255" ;;
+        --red) COLOR_MODE="255 0 0" ;;
+        --cyan) COLOR_MODE="0 255 255" ;;
+        --purple) COLOR_MODE="180 0 255" ;;
+        --sky) COLOR_MODE="135 206 235" ;;
+        --amber) COLOR_MODE="255 191 0" ;;
+        --pink) COLOR_MODE="255 105 180" ;;
+        --sakura) COLOR_MODE="255 182 193" ;;
+        --ice) COLOR_MODE="173 216 230" ;;
+        --mint) COLOR_MODE="152 255 152" ;;
+        --peach) COLOR_MODE="255 203 164" ;;
+        --lavender) COLOR_MODE="200 150 230" ;;
+        --gold) COLOR_MODE="255 215 0" ;;
+        --silver) COLOR_MODE="220 220 220" ;;
+        --rgb) COLOR_MODE="rgb-only" ;;
+        --low-power) SLEEP_TIME=0.1 ;;
+        --help) ;; # Already handled above
+        *)
+            echo "Unknown option: $arg"
+            exit 1
+            ;;
+        esac
+    done
 fi
 
 draw_char_rgb() {
