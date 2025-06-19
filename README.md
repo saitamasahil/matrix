@@ -1,9 +1,14 @@
 # matrix
 
+<div align="center">
+
 A simple digital rain effect in pure Bash.  
 Just run it. No dependencies, no setup—just vibes.
+<br>
 
 <img src="matrix.gif" alt="matrix rain preview">
+
+</div>
 
 ---
 
