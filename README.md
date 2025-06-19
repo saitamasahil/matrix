@@ -1,57 +1,43 @@
-<div align="center">
-
 # matrix
 
-**A stupid simple digital rain effect implemented in pure Bash**  
-Just run and vibe. No dependencies. No nonsense.  
+A simple digital rain effect in pure Bash.  
+Just run it. No dependencies, no setup—just vibes.  
 <img src="matrix.gif" alt="matrix rain preview">
-
-<p>
-  <img src="https://shields.io/badge/made-with%20%20bash-green?style=flat-square&color=d5c4a1&labelColor=1d2021&logo=gnu-bash">
-  <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg">
-  <a href="https://discord.gg/W4mQqNnfSq">
-    <img src="https://discordapp.com/api/guilds/913584348937207839/widget.png?style=shield"/>
-  </a>
-</p>
-
-</div>
 
 ---
 
-## ⚡ Preview It Instantly
+## Preview Instantly
 
-Run directly in your terminal with no install:
+Run it straight from your terminal, no installation needed:
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix2/main/matrix)
 ```
 
-> This is the default theme & it uses random colors.
+This runs the default theme with random colors.
 
-Use any color theme by passing a flag:
+To use a specific color theme, pass a flag like this:
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix2/main/matrix) --red
 ```
 
-> This command runs the digital rain in the red color theme.
-
 > Check more flags below in the [🎨 Available Themes](#-available-themes) section.
 
-**Pro Tip:** For the best visual experience, use a terminal with a black or dark background to enhance the matrix rain effect.
+Tip: Use a dark or black terminal background to get the best visual effect.
 
 ---
 
-## 📦 Download & Install
+## Download and Install
 
-Clone the repo:
+Clone the repository:
 
 ```bash
 git clone https://github.com/saitamasahil/matrix2
 cd matrix
 ```
 
-Optional: install globally
+(Optional) Install it globally so you can run `matrix` from anywhere:
 
 ```bash
 sudo cp matrix /usr/local/bin
@@ -59,18 +45,18 @@ sudo cp matrix /usr/local/bin
 
 ---
 
-## 🕹️ Usage
+## How to Use
 
-You can now run the digital rain like so:
+Once installed, just type:
 
 ```bash
 matrix             # Default: random color rain
-matrix --green     # Classic green rain
-matrix --red       # Red rain
-matrix --low-power # Low power mode (slower animation)
+matrix --green     # Classic Matrix green
+matrix --red       # Red theme
+matrix --low-power # Slower animation, uses less CPU
 ```
 
-If not installed, run directly via:
+If you're running it directly:
 
 ```bash
 ./matrix
@@ -78,7 +64,7 @@ If not installed, run directly via:
 
 ---
 
-## 🎨 Available Themes
+## Available Themes
 
 | Flag         | Description              |
 | ------------ | ------------------------ |
@@ -101,16 +87,14 @@ If not installed, run directly via:
 | `--rgb`      | Red, green, blue rain    |
 | _(default)_  | Random color rain        |
 
-> Run `matrix` with no flag for a random-colored experience
-
 ---
 
-## ⚙️ Other flags
+## Other Flags
 
-| Flag         | Description                     |
-| ------------ | ------------------------------- |
-| `--help`     | Show the help panel             |
-| `--low-power`| Enables low FPS, uses less CPU  |
+| Flag          | Description                    |
+| ------------- | ------------------------------ |
+| `--help`      | Show the help panel            |
+| `--low-power` | Enables low FPS, uses less CPU |
 
 Example:
 
@@ -118,20 +102,20 @@ Example:
 matrix --green --low-power
 ```
 
-This runs the green theme with low power usage (slower drops, less CPU load).
+---
 
-## ✅ Requirements
+## Requirements
 
 - Bash 3.2+
 - UTF-8 capable terminal (GNOME Terminal, iTerm2, Alacritty, etc.)
-- Truecolor (24-bit) terminal support (most modern terminals support this)
+- Truecolor (24-bit) terminal support
 - Terminal must support ANSI escape sequences
-- Works on **Linux**, **macOS**, and **WSL**
+- Works on Linux, macOS, and WSL
 - No external dependencies
 
 ---
 
-## ❌ Uninstall
+## Uninstall
 
 If you installed with `cp`, remove it like so:
 
@@ -141,8 +125,8 @@ sudo rm /usr/local/bin/matrix
 
 ---
 
-## 🧠 Inspired By
+## Inspired By
 
 Originally inspired by the [matrix project by wick3dr0se](https://github.com/wick3dr0se/matrix) and, of course, the legendary visuals from _The Matrix_.
 
-> “I can only show you the door. You’re the one that has to walk through it.” — Morpheus
+"I can only show you the door. You're the one that has to walk through it." — Morpheus
