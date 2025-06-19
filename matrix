@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Show help information if --help is passed
 if [[ "${1:-}" == "--help" ]]; then
     clear
     echo ""
@@ -35,27 +36,32 @@ if [[ "${1:-}" == "--help" ]]; then
     exit 0
 fi
 
+# Switch to alternate screen and hide cursor
 init_term() {
-    tput smcup # Enter alternate screen
-    tput civis # Hide cursor
-    stty -echo
-    read -r LINES COLUMNS < <(stty size)
+    tput smcup                           # Use terminal's alternate screen buffer
+    tput civis                           # Hide the cursor
+    stty -echo                           # Disable key echo
+    read -r LINES COLUMNS < <(stty size) # Get terminal dimensions
 }
 
+# Clean up when script exits or gets interrupted
 deinit_term() {
-    pkill -P $$ &>/dev/null || true # Kill children
-    tput rmcup                      # Exit alternate screen
-    tput cnorm                      # Show cursor
-    stty echo
+    pkill -P $$ &>/dev/null || true # Kill any background processes started by this script
+    tput rmcup                      # Restore original screen
+    tput cnorm                      # Show cursor again
+    stty echo                       # Re-enable key echo
     exit 0
 }
-trap deinit_term EXIT INT
+trap deinit_term EXIT INT # Always run cleanup on exit or Ctrl+C
 
+# Characters used in the rain, mostly Katakana + extras
 SYMBOLS='ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=<>?/|[]{}□△▽※¤☆♪♫∆∇∞§'
 
-COLOR_MODE="random"
-SLEEP_TIME=0.04
+# Default settings
+COLOR_MODE="random" # Default to full RGB randomness
+SLEEP_TIME=0.04     # Base sleep time between spawns
 
+# Parse any arguments passed by the user
 if [[ $# -gt 0 ]]; then
     for arg in "$@"; do
         case "$arg" in
@@ -76,8 +82,8 @@ if [[ $# -gt 0 ]]; then
         --gold) COLOR_MODE="255 215 0" ;;
         --silver) COLOR_MODE="220 220 220" ;;
         --rgb) COLOR_MODE="rgb-only" ;;
-        --low-power) SLEEP_TIME=0.1 ;;
-        --help) ;; # Already handled above
+        --low-power) SLEEP_TIME=0.1 ;; # Lower CPU usage, fewer updates
+        --help) ;;                     # Already handled above
         *)
             echo "Unknown option: $arg"
             exit 1
@@ -86,17 +92,19 @@ if [[ $# -gt 0 ]]; then
     done
 fi
 
+# Prints a character at a specific position with RGB color
 draw_char_rgb() {
     local row=$1 col=$2 char=$3 r=$4 g=$5 b=$6
     ((row >= 1 && row <= LINES)) && printf '\e[%d;%dH\e[38;2;%d;%d;%dm%s\e[0m' "$row" "$col" "$r" "$g" "$b" "$char"
 }
 
+# Starts a single matrix "rain drop" in a column
 random_drop() {
-    sleep 0.$((RANDOM % 3)) # Stagger start time
+    sleep 0.$((RANDOM % 3)) # Random delay to stagger drops
 
-    local col=$((RANDOM % COLUMNS + 1)) # Use full width
-    local len=$((RANDOM % (LINES / 3) + 8))
-    local speed=$((RANDOM % 10 + 1))
+    local col=$((RANDOM % COLUMNS + 1))     # Random column position
+    local len=$((RANDOM % (LINES / 3) + 8)) # Drop length
+    local speed=$((RANDOM % 10 + 1))        # Drop speed variation
 
     local r g b
     if [[ "$COLOR_MODE" == "random" ]]; then
@@ -122,13 +130,15 @@ random_drop() {
             ;; # Blue
         esac
     else
-        read -r r g b <<<"$COLOR_MODE"
+        read -r r g b <<<"$COLOR_MODE" # Use specified RGB
     fi
 
+    # Draw the falling drop, character by character
     for ((i = 1; i <= LINES + len; i++)); do
         local char="${SYMBOLS:RANDOM%${#SYMBOLS}:1}"
         draw_char_rgb "$i" "$col" "$char" "$r" "$g" "$b"
 
+        # Draw fading trail behind the main character
         for offset in {1..6}; do
             local fade_r=$((r / (offset + 1)))
             local fade_g=$((g / (offset + 1)))
@@ -137,14 +147,18 @@ random_drop() {
             ((trail_row > 0)) && draw_char_rgb "$trail_row" "$col" "${SYMBOLS:RANDOM%${#SYMBOLS}:1}" "$fade_r" "$fade_g" "$fade_b"
         done
 
+        # Clear the character that’s now out of view
         ((i > len)) && ((i - len <= LINES)) && printf '\e[%d;%dH ' "$((i - len))" "$col"
-        sleep "0.0$speed"
+
+        sleep "0.0$speed" # Control fall speed
     done
 }
 
+# Entry point of the animation
 main() {
     init_term
     while true; do
+        # Limit number of active drops to avoid overloading CPU
         (($(jobs -r | wc -l) < COLUMNS / 3)) && random_drop &
         sleep "$SLEEP_TIME"
     done
