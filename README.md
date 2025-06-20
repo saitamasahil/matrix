@@ -2,8 +2,7 @@
 
 <div align="center">
 
-A simple digital rain effect in pure Bash.  
-Just run it. No dependencies, no setup—just vibes.
+A simple digital rain Matrix-inspired effect in pure Bash. Just run it. No dependencies, no setup—just vibes.
 <br>
 
 <img src="matrix.gif" alt="matrix rain preview">
@@ -17,7 +16,7 @@ Just run it. No dependencies, no setup—just vibes.
 Run it straight from your terminal, no installation needed:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix2/main/matrix)
+bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix)
 ```
 
 This runs the default theme with random colors.
@@ -25,7 +24,7 @@ This runs the default theme with random colors.
 To use a specific color theme, pass a flag like this:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix2/main/matrix) --red
+bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix) --red
 ```
 
 > Check more flags below in the [available Themes](#available-themes) section.
@@ -39,7 +38,7 @@ Tip: Use a dark or black terminal background to get the best visual effect.
 Clone the repository:
 
 ```bash
-git clone https://github.com/saitamasahil/matrix2
+git clone https://github.com/saitamasahil/matrix
 cd matrix
 ```
 
