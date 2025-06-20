@@ -38,10 +38,11 @@ fi
 
 # Switch to alternate screen and hide cursor
 init_term() {
-    tput smcup                           # Use terminal's alternate screen buffer
-    tput civis                           # Hide the cursor
-    stty -echo                           # Disable key echo
-    read -r LINES COLUMNS < <(stty size) # Get terminal dimensions
+    tput smcup           # Use terminal's alternate screen buffer
+    tput civis           # Hide the cursor
+    stty -echo           # Disable key echo
+    LINES=$(tput lines)  # Get terminal height using tput
+    COLUMNS=$(tput cols) # Get terminal width using tput
 }
 
 # Clean up when script exits or gets interrupted
