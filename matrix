@@ -131,7 +131,7 @@ random_drop() {
             ;; # Blue
         esac
     else
-        read -r r g b <<<"$COLOR_MODE" # Use specified RGB
+        IFS=' ' read -r r g b <<<"${COLOR_MODE:-0 255 0}" # Use specified RGB
     fi
 
     # Draw the falling drop, character by character
@@ -151,7 +151,7 @@ random_drop() {
         # Clear the character that’s now out of view
         ((i > len)) && ((i - len <= LINES)) && printf '\e[%d;%dH ' "$((i - len))" "$col"
 
-        sleep "0.0$speed" # Control fall speed
+        sleep "0.$(printf '%02d' "$speed")" # Control fall speed
     done
 }
 
@@ -160,7 +160,7 @@ main() {
     init_term
     while true; do
         # Limit number of active drops to avoid overloading CPU
-        (($(jobs -r | wc -l) < COLUMNS / 3)) && random_drop &
+        (($(ps --ppid $$ -o stat= | grep -c '^S') < COLUMNS / 3)) && random_drop &
         sleep "$SLEEP_TIME"
     done
 }
