@@ -54,6 +54,7 @@ deinit_term() {
     exit 0
 }
 trap deinit_term EXIT INT # Always run cleanup on exit or Ctrl+C
+trap 'LINES=$(tput lines); COLUMNS=$(tput cols)' SIGWINCH # Auto-resize terminal dimensions on window change
 
 # Characters used in the rain, mostly Katakana + extras
 SYMBOLS='ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=<>?/|[]{}□△▽※¤☆♪♫∆∇∞§'
