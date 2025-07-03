@@ -27,7 +27,7 @@ To use a specific color theme, pass a flag like this:
 bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix) --red
 ```
 
-> Check more flags below in the [available Themes](#available-themes) section.
+> Check more flags below in the [Available Themes](#available-themes) section.
 
 Tip: Use a dark or black terminal background to get the best visual effect.
 
@@ -91,6 +91,11 @@ Tip: Use a dark or black terminal background to get the best visual effect.
 | `--lavender` | Light lavender rain      |
 | `--gold`     | Golden yellow rain       |
 | `--silver`   | Silver rain              |
+| `--lime`     | Bright lime rain         |
+| `--teal`     | Calming teal rain        |
+| `--rose`     | Bold rosy pink rain      |
+| `--fire`     | Fiery rain               |
+| `--white`    | Pure white rain          |
 | `--rgb`      | Red, green, blue rain    |
 | _(default)_  | Random color rain        |
 

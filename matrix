@@ -23,6 +23,11 @@ if [[ "${1:-}" == "--help" ]]; then
     echo "  matrix --lavender    → Light lavender rain"
     echo "  matrix --gold        → Golden yellow rain"
     echo "  matrix --silver      → Silver rain"
+    echo "  matrix --lime        → Bright lime rain"
+    echo "  matrix --teal        → Calming teal rain"
+    echo "  matrix --rose        → Bold rosy pink rain"
+    echo "  matrix --fire        → Fiery rain"
+    echo "  matrix --white       → Pure white rain"
     echo "  matrix --rgb         → Red, green, blue rain"
     echo "  matrix --low-power   → Enables low FPS, uses less CPU"
     echo "  matrix --help        → Show this help panel"
@@ -53,7 +58,7 @@ deinit_term() {
     stty echo                       # Re-enable key echo
     exit 0
 }
-trap deinit_term EXIT INT # Always run cleanup on exit or Ctrl+C
+trap deinit_term EXIT INT                                 # Always run cleanup on exit or Ctrl+C
 trap 'LINES=$(tput lines); COLUMNS=$(tput cols)' SIGWINCH # Auto-resize terminal dimensions on window change
 
 # Characters used in the rain, mostly Katakana + extras
@@ -83,6 +88,11 @@ if [[ $# -gt 0 ]]; then
         --lavender) COLOR_MODE="200 150 230" ;;
         --gold) COLOR_MODE="255 215 0" ;;
         --silver) COLOR_MODE="220 220 220" ;;
+        --lime) COLOR_MODE="191 255 0" ;;
+        --teal) COLOR_MODE="0 128 128" ;;
+        --rose) COLOR_MODE="255 0 127" ;;
+        --fire) COLOR_MODE="255 85 0" ;;
+        --white) COLOR_MODE="255 255 255" ;;
         --rgb) COLOR_MODE="rgb-only" ;;
         --low-power) SLEEP_TIME=0.1 ;; # Lower CPU usage, fewer updates
         --help) ;;                     # Already handled above
