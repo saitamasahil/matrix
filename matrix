@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo -ne "\033]0;Matrix Rain\007"
 set -euo pipefail
 
 # Show help information if --help is passed
